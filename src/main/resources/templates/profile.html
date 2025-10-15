@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px 40px;
+            max-width: 600px;
+            width: 100%;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .profile-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 15px;
+            border: 4px solid #667eea;
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .avatar:hover {
+            transform: scale(1.05);
+        }
+
+        .profile-header h1 {
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .profile-header .email {
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        .login-provider {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            color: #1565c0;
+            font-weight: 600;
+            margin-bottom: 20px;
+            border: 2px solid #bbdefb;
+        }
+
+        .login-provider svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+            padding: 12px 15px;
+            border-radius: 10px;
+            color: #555;
+            text-align: left;
+            font-size: 13px;
+            border: 2px solid #e0e0e0;
+            margin-top: 15px;
+        }
+
+        .info-box strong {
+            display: inline-block;
+            min-width: 120px;
+            color: #333;
+        }
+
+        .info-box br {
+            margin-bottom: 8px;
+        }
+
+        .alert {
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: slideDown 0.4s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .alert-success {
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+            color: #155724;
+            border: 2px solid #c3e6cb;
+        }
+
+        .alert-success::before {
+            content: '✓';
+            width: 22px;
+            height: 22px;
+            background: #155724;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .alert-error {
+            background: linear-gradient(135deg, #f8d7da 0%, #f5c6cb 100%);
+            color: #721c24;
+            border: 2px solid #f5c6cb;
+        }
+
+        .alert-error::before {
+            content: '✕';
+            width: 22px;
+            height: 22px;
+            background: #721c24;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        input[type="text"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+            line-height: 1.6;
+        }
+
+        .error {
+            color: #f44336;
+            font-size: 14px;
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .error::before {
+            content: '⚠';
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-logout {
+            background: #f44336;
+            color: white;
+        }
+
+        .btn-logout:hover {
+            background: #da190b;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(244, 67, 54, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 40px 25px;
+            }
+
+            .avatar {
+                width: 100px;
+                height: 100px;
+            }
+
+            .profile-header h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- Success/Error Messages -->
+    <div th:if="${successMessage}" class="alert alert-success" th:text="${successMessage}"></div>
+    <div th:if="${errorMessage}" class="alert alert-error" th:text="${errorMessage}"></div>
+
+    <!-- Profile Header -->
+    <div class="profile-header">
+        <img th:src="${user.avatarUrl}"
+             th:alt="${user.displayName}"
+             class="avatar"
+             onerror="this.src='https://ui-avatars.com/api/?name=' + this.alt + '&size=100&background=667eea&color=fff'">
+        <h1 th:text="${user.displayName}">Display Name</h1>
+        <p class="email">
+            <span th:if="${loginProvider == 'GOOGLE'}" th:text="${user.email}"></span>
+            <span th:if="${loginProvider == 'GITHUB'}" th:text="'@' + ${#strings.substringBefore(user.email, '@users.noreply.github.com')}"></span>
+        </p>
+
+        <!-- Login Provider Badge -->
+        <div class="login-provider" th:if="${loginProvider != null}">
+            <svg th:if="${loginProvider == 'GOOGLE'}" viewBox="0 0 24 24">
+                <path fill="#4285f4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                <path fill="#34a853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                <path fill="#fbbc05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                <path fill="#ea4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+            </svg>
+            <svg th:if="${loginProvider == 'GITHUB'}" viewBox="0 0 24 24" fill="#24292e">
+                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+            </svg>
+            <span th:text="'Logged in via ' + ${loginProvider}">Logged in via Google</span>
+        </div>
+
+        <div class="info-box">
+            <strong>Account Created:</strong>
+            <span th:text="${user.createdAt != null ? #temporals.format(user.createdAt, 'MMM dd, yyyy HH:mm') : 'N/A'}"></span><br>
+            <strong>Last Updated:</strong>
+            <span th:text="${user.updatedAt != null ? #temporals.format(user.updatedAt, 'MMM dd, yyyy HH:mm') : 'N/A'}"></span>
+        </div>
+    </div>
+
+    <!-- Edit Profile Form -->
+    <form th:action="@{/profile}" method="post" th:object="${profileUpdateRequest}">
+        <div class="form-group">
+            <label for="displayName">Display Name *</label>
+            <input type="text"
+                   id="displayName"
+                   th:field="*{displayName}"
+                   placeholder="Enter your display name"
+                   required>
+            <div class="error" th:if="${#fields.hasErrors('displayName')}" th:errors="*{displayName}"></div>
+        </div>
+
+        <div class="form-group">
+            <label for="bio">Bio</label>
+            <textarea id="bio"
+                      th:field="*{bio}"
+                      placeholder="Tell us about yourself (optional)"></textarea>
+            <div class="error" th:if="${#fields.hasErrors('bio')}" th:errors="*{bio}"></div>
+        </div>
+
+        <div class="button-group">
+            <button type="submit" class="btn btn-primary">Update Profile</button>
+        </div>
+    </form>
+
+    <!-- Logout Button -->
+    <div class="button-group">
+        <a href="/logout" class="btn btn-logout">Logout</a>
+    </div>
+</div>
+</body>
+</html>
