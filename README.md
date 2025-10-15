@@ -65,7 +65,7 @@ Scroll to:
 Lines 59–60 → Google 
 Lines 67–68 → GitHub
 
-For Google
+## For Google
 client id :
 ##  677025675545-rulp0k3cvmgrome4gudhhiugqbsvn2u3.apps.googleusercontent.com ##
 
@@ -73,7 +73,7 @@ client secret:
 
 ## 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 ##
 
-For Github
+## For Github
 client id :
 ## Ov23liV2r7mjBiICaU3S ##
 
