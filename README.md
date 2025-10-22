@@ -21,7 +21,6 @@
 
 ```bash
 git clone <your-repository-url>
-cd oauth2-profile-app
 ```
 
 ### 2. Import Project
