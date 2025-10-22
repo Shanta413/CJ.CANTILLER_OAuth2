@@ -23,6 +23,7 @@ OAuth2	Google, GitHub
 Database	H2 (in-memory, dev mode)
 Frontend	Static HTML/CSS/JS (/static folder) // will update in the future to ReactJS
 
+```bash
 +--------------------+
 |    User Browser    |
 +--------------------+
@@ -70,7 +71,7 @@ Frontend	Static HTML/CSS/JS (/static folder) // will update in the future to Rea
 |  │ ─ provider, sub, FK... │  |
 |  └────────────────────────┘  |
 +------------------------------+
-
+```
 
 
 
