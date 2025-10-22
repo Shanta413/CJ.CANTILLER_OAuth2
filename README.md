@@ -14,6 +14,54 @@
 
 ---
 
+🧱 Architecture Overview
+🛠️ Technologies Used
+Layer	Technology
+Backend	Spring Boot 3.5+, Java 21
+Security	Spring Security OAuth2 Client
+OAuth2	Google, GitHub
+Database	H2 (in-memory, dev mode)
+Frontend	Static HTML/CSS/JS (/static folder) // will update in the future to ReactJS
+
++--------------------+       +------------------------------+       +-----------------------------------------+      
+|    User Browser    | --->  | Static Frontend (HTML/CSS/JS)| --->  | Spring Boot Backend (OAuth Login Demo)  | --->  
++--------------------+       +------------------------------+       +-----------------------------------------+     
+                                                                      |                                         |       
+                                                                      |  +-----------------------------------+  |
+                                                                      |  | Spring Security OAuth2 Client     |  |
+                                                                      |  |  - Handles login redirects        |  |
+                                                                      |  |  - Fetches access tokens          |  |
+                                                                      |  |  - Loads user info (OIDC/OAuth2)  |  |
+                                                                      |  +----------------+------------------+  |
+                                                                      |                       |                 |
+                                                                      |                       v                 |
+                                                                      |  +-----------------------------------+  |
+                                                                      |  | CustomOAuth2UserService           |  |
+                                                                      |  |  - Maps user info to DB record    |  |
+                                                                      |  |  - Links AuthProvider entries     |  |
+                                                                      |  +----------------+------------------+  |
+                                                                      |                       |                 |
+                                                                      |                       v                 |
+                                                                      |  +-----------------------------------+  |
+                                                                      |  | DelegatingOidcUserService         |  |
+                                                                      |  |  - Wraps Google OIDC login        |  |
+                                                                      |  |  - Returns compliant OidcUser     |  |
+                                                                      |  +-----------------------------------+  |
+                                                                      +-----------------------------------------+
+                                                                                               |
+                                                                                               v
+                                                                              +------------------------------+
+                                                                              |     H2 In-Memory Database    |
+                                                                             +------------------------------+
+                                                                             |  users table                 |
+                                                                             |  ─ id, email, name...        |
+                                                                             +------------------------------+
+                                                                             |  auth_providers table        |
+                                                                             |  ─ provider, sub, FK...      |
+                                                                             +------------------------------+
+
+
+
 
 ## 🚀 Getting Started
 
