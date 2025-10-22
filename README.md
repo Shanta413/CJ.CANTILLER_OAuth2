@@ -17,13 +17,13 @@
 🧱 Architecture Overview
 🛠️ Technologies Used
 
-
+```bash
 -Backend	Spring Boot 3.5+, Java 21
 -Security	Spring Security OAuth2 Client
 -OAuth2	Google, GitHub
 -Database	H2 (in-memory, dev mode) # have postgres but commented out
 -Frontend	Static HTML/CSS/JS (/static folder) // will update in the future to ReactJS
-
+```
 ```bash
 +--------------------+       +------------------------------+         +-----------------------------------------+       
 |    User Browser    | --->  | Static Frontend (HTML/CSS/JS)| --->    | Spring Boot Backend (OAuth Login Demo)  | 
