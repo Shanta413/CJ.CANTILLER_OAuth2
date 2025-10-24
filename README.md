@@ -14,7 +14,7 @@
 
 ---
 
-## Demo Video Link // I uploaded the demo video file instead of a link in the assignment submission.
+## Demo Video Link // Sorry I uploaded the demo video file instead of a link in the assignment submission.
 
 https://drive.google.com/file/d/1-ZpM6dzTxr3bhYMbtBsz3vOHbkUjGgde/view?usp=sharing
 
