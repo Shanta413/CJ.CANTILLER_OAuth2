@@ -42,13 +42,6 @@
                                                                       |  |  - Maps user info to DB record    |  |
                                                                       |  |  - Links AuthProvider entries     |  |
                                                                       |  +----------------+------------------+  |
-                                                                      |                       |                 |
-                                                                      |                       v                 |
-                                                                      |  +-----------------------------------+  |
-                                                                      |  | DelegatingOidcUserService         |  |
-                                                                      |  |  - Wraps Google OIDC login        |  |
-                                                                      |  |  - Returns compliant OidcUser     |  |
-                                                                      |  +-----------------------------------+  |
                                                                       +-----------------------------------------+
                                                                                             |
                                                                                             v
